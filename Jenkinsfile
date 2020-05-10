@@ -44,7 +44,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'aliyundocker', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                     // some block
-                     sh 'docker login --username=$user -p=$pwd  registry.cn-zhangjiakou.aliyuncs.com'
+                     sh 'docker login --username=$user --password=$pwd  registry.cn-zhangjiakou.aliyuncs.com'
                      sh 'docker tag icoding-java-img registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
                      sh 'docker push registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
                 }
