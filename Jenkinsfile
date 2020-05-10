@@ -18,12 +18,14 @@ pipeline {
      }
 
      stage('docker构建镜像') {
+       agent any
        steps {
          // One or more steps need to be included within the steps block.
        }
      }
 
      stage('docker swarm进行部署') {
+       agent any
        steps {
          // One or more steps need to be included within the steps block.
        }
