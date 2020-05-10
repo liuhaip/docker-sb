@@ -12,6 +12,9 @@ services:
   redis:
     image: redis:alpine
 
+
+
+
 #搭建一个CICD流程，由自动化流程，直接将项目从github拉下来。docker-compose up即可
 #声明式 compose.yml，解耦
 #命令式 docker service create --name -p
