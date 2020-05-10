@@ -20,19 +20,24 @@ pipeline {
      stage('docker构建镜像') {
        agent any
        steps {
-         // One or more steps need to be included within the steps block.
-         sh 'echo 111'
+         sh 'docker build -t icoding-java-img .'
        }
      }
 
+
+// 每个step里面必须有东西，全局agent none的时候，每个stage 都必须有自己的agent
      stage('docker swarm进行部署') {
        agent any
        steps {
-         // One or more steps need to be included within the steps block.
-          sh 'echo 111'
+          //人工确认
+          input id: 'Deployee-to-prod', message: '确定部署到生产环境？', ok: '部署', submitter: 'admin'
+          sh 'docker stack deploy -c docker-compose.yaml icodingapp'
+          //邮件通知
+          mail to: '1970721562@qq.com',
+                       subject: "${env.JOB_NAME}-${env.BUILD_NUMBER}构建成功",
+                       body: "项目 ${env.BRANCH_NAME}分支 构建成功 ${env.BUILD_URL}，"
        }
      }
-
    }
 
 
