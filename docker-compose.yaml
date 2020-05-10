@@ -11,9 +11,6 @@ services:
       - "8000:8080"
   redis:
     image: redis:alpine
-    volumes:
-      - "/opt/redis:/etc/redis"
-    command: redis-server /etc/redis/redis.conf
 
 #搭建一个CICD流程，由自动化流程，直接将项目从github拉下来。docker-compose up即可
 #声明式 compose.yml，解耦

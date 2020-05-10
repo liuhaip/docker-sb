@@ -17,6 +17,8 @@ pipleline{
      }
 
      stage('项目测试'){
+         agent any
+         //我们这个不能用到前面stage的环境。前面stage的用完就清除了。
 
      }
    }
