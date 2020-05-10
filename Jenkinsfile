@@ -39,12 +39,13 @@ pipeline {
        }
      }
 
+//参数化构建
       stage('是否发布镜像') {
             agent any
             steps {
-                withCredentials([usernamePassword(credentialsId: 'aliyundocker', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                withCredentials([usernamePassword(credentialsId: 'aliyundocker', passwordVariable: 'apwd', usernameVariable: 'user')]) {
                     // some block
-                     sh 'docker login --username=$user --password=$pwd  registry.cn-zhangjiakou.aliyuncs.com'
+                     sh 'docker login -u $user -p $apwd registry.cn-zhangjiakou.aliyuncs.com'
                      sh 'docker tag icoding-java-img registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
                      sh 'docker push registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
                 }
