@@ -1,27 +1,36 @@
-pipleline{
+pipeline{
    agent none
+
+   //1、代码的检出==》2、maven构建jar包==》3、docker构建镜像==》4、docker swarm按照compose进行部署
    stages {
-     stage('项目构建'){
-        //用maven环境
+     stage('maven进行项目构建') {
         agent {
-                docker {
-                    image 'maven:3-alpine'
-                    args '-v /root/.m2:/root/.m2'
-                }
+          docker {
+            args '-v /root/.m2:/root/.m2'
+            image 'maven:3-alpine'
+          }
         }
-
-        steps {
-         sh 'echo 123'
-         sh 'mvn '
-        }
+       steps {
+          sh label: '', script: 'mvn -gs setting.xml clean package -Dmaven.test.skip=true'
+          sh 'pwd'
+          sh 'ls'
+       }
      }
 
-     stage('项目测试'){
-         agent any
-         //我们这个不能用到前面stage的环境。前面stage的用完就清除了。
-
+     stage('docker构建镜像') {
+       steps {
+         // One or more steps need to be included within the steps block.
+       }
      }
+
+     stage('docker swarm进行部署') {
+       steps {
+         // One or more steps need to be included within the steps block.
+       }
+     }
+
    }
+
 
 
 }
