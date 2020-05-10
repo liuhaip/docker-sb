@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.13.RELEASE</version>
+    </parent>
+    <groupId>com.icoding</groupId>
+    <artifactId>icoding-java</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- mvn clean package docker:stop docker:remove docker:build docker:run -->
+            <!-- 121.199.67.10 裸奔。。。 ca证书。CICD（Dockerfile与应用是解耦）-->
+            <!--下节课，docker集群，docker compose。rancher构建一个CICD-->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.33.0</version>
+
+                <configuration>
+                    <dockerHost>tcp://121.199.67.10:2375</dockerHost>
+                    <registry>registry.cn-shenzhen.aliyuncs.com</registry>
+                    <authConfig>
+                        <push>
+                            <username>icodingallen</username>
+                            <password>icoding123</password>
+                        </push>
+                    </authConfig>
+                    <images>
+                        <image>
+                            <name>allenicodingdocker/hello-java:v2.2</name>
+                            <build>
+                                <!--使用dockerFile文件 <dockerFile>${project.basedir}/docker/${project.name}</dockerFile>-->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>88:8080</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
