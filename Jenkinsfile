@@ -1,7 +1,6 @@
-pipeline{
+pipeline {
    agent none
 
-   //1、代码的检出==》2、maven构建jar包==》3、docker构建镜像==》4、docker swarm按照compose进行部署
    stages {
      stage('maven进行项目构建') {
         agent {
@@ -14,6 +13,7 @@ pipeline{
           sh label: '', script: 'mvn -gs setting.xml clean package -Dmaven.test.skip=true'
           sh 'pwd'
           sh 'ls'
+          sh 'echo 666'
        }
      }
 
