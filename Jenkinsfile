@@ -30,8 +30,8 @@ pipeline {
        agent any
        steps {
           //人工确认
-          //input id: 'Deployee-to-prod', message: '确定部署到生产环境？', ok: '部署', submitter: 'admin'
-          //sh 'docker stack deploy -c docker-compose.yaml icodingapp'
+          input id: 'Deployee-to-prod', message: '确定部署到生产环境？', ok: '部署', submitter: 'admin'
+          sh 'docker stack deploy -c docker-compose.yaml icodingapp'
           //邮件通知
           mail to: '1970721562@qq.com',
                        subject: "${env.JOB_NAME}-${env.BUILD_NUMBER}构建成功",
@@ -40,19 +40,19 @@ pipeline {
      }
 
 //参数化构建
-      stage('是否发布镜像') {
-            agent any
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'aliyundocker', passwordVariable: 'apwd', usernameVariable: 'user')]) {
-                    // some block
-                     sh 'docker login -u $user -p $apwd registry.cn-zhangjiakou.aliyuncs.com'
-                     sh 'docker tag icoding-java-img registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
-                     sh 'docker push registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
-                }
+      //stage('是否发布镜像') {
+           //agent any
+            //steps {
+               // withCredentials([usernamePassword(credentialsId: 'aliyundocker', passwordVariable: 'apwd', usernameVariable: 'user')]) {
+                 //   // some block
+                   //  sh 'docker login -u $user -p $apwd registry.cn-zhangjiakou.aliyuncs.com'
+                     //sh 'docker tag icoding-java-img registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
+                    // sh 'docker push registry.cn-zhangjiakou.aliyuncs.com/icodingdocker/icoding-java-img:v1.0'
+                //}
 
-            }
-      }
-   }
+            //}
+      //}
+   //}
 
 
 
